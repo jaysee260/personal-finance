@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<body>
+
+    <h1>Accounts</h1>
+
+    <ul id="accounts"></ul>
+
+    <script>
+        var accounts = [
+            {
+                id: 1,
+                name: "Personal Checking"
+            },
+            {
+                id: 2,
+                name: "Joint Checking"
+            },
+            {
+                id: 3,
+                name: "Personal Savings"
+            },
+            {
+                id: 4,
+                name: "Joint Savings"
+            }
+        ];
+
+        var accountsList = document.getElementById("accounts");
+        
+        
+        accounts.forEach(function(account) {
+            var listItem = document.createElement("li");
+            listItem.setAttribute("id", account.id);
+            listItem.setAttribute("class", "account");
+            listItem.innerText = account.name;
+            accountsList.appendChild(listItem);
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "personal-finance",
+  "version": "1.0.0",
+  "description": "collaborate project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsdev17/personal-finance.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsdev17/personal-finance/issues"
+  },
+  "homepage": "https://github.com/jsdev17/personal-finance#readme",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
