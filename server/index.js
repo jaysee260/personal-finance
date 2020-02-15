@@ -1,23 +1,31 @@
 var express = require("express");
 var app = express();
-var path = require("path");
 var PORT = 3000;
-
-var accounts = [
-    {
-        name: "Personal Checking"
-    },
-    {
-        name: "Joint Checking"
-    }
-];
 
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
+    var accounts = [
+        {
+            id: 1,
+            name: "Personal Checking"
+        },
+        {
+            id: 2,
+            name: "Joint Checking"
+        },
+        {
+            id: 3,
+            name: "Personal Savings"
+        },
+        {
+            id: 4,
+            name: "Joint Savings"
+        }
+    ];
+
     res.render("home.ejs", {
-        ACCOUNTS: accounts,
-        num: 5
+        accounts
     });
 });
 

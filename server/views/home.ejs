@@ -13,27 +13,8 @@
     <ul id="accounts"></ul>
 
     <script>
-        var accounts = [
-            {
-                id: 1,
-                name: "Personal Checking"
-            },
-            {
-                id: 2,
-                name: "Joint Checking"
-            },
-            {
-                id: 3,
-                name: "Personal Savings"
-            },
-            {
-                id: 4,
-                name: "Joint Savings"
-            }
-        ];
-
+        var accounts = JSON.parse('<%- JSON.stringify(accounts) %>');
         var accountsList = document.getElementById("accounts");
-        
         
         accounts.forEach(function(account) {
             var listItem = document.createElement("li");
@@ -42,7 +23,6 @@
             listItem.innerText = account.name;
             accountsList.appendChild(listItem);
         });
-        
     </script>
 </body>
 </html>
