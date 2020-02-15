@@ -1,7 +1,7 @@
 {
   "name": "personal-finance",
   "version": "1.0.0",
-  "description": "collaborate project",
+  "description": "A web app for tracking financial activity across multiple accounts.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
