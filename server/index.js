@@ -1,4 +1,6 @@
 var express = require("express");
+var plaid = require("plaid");
+
 var app = express();
 var PORT = 3000;
 
