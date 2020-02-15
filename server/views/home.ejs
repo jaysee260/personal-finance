@@ -12,6 +12,8 @@
     <button id="link-account-btn">Link an Account</button>
 
     <p id="plaid-public-token"></p>
+    <p id="plaid-access-token"></p>
+    <p id="plaid-item-id"></p>
 
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 
@@ -22,6 +24,13 @@
 
     <!-- Plaid Link Client Initialization -->
     <script>
+        // TODO: Consider dumping EJS and just using plain HTML and JavaScript.
+        // We really are only using EJS to get some values needed by the Plaid Link Client.
+        // We could just get via a GET request. It does not pose a security concern since,
+        // after all, the server just replaces EJS placeholders with values and sends us
+        // a resolved template, so it isn't like EJS is somehow hiding these values from
+        // someone who might inspect the browser's developer tools.
+
         var plaidLinkClient = Plaid.create({
             apiVersion: 'v2',
             clientName: 'Personal Finance - Plaid Link Handler',
@@ -29,9 +38,23 @@
             product: '<%= PLAID_PRODUCTS %>'.split(','),
             key: '<%= PLAID_PUBLIC_KEY %>',
             countryCodes: '<%= PLAID_COUNTRY_CODES %>'.split(','),
-            onSuccess: function(publicToken) {
-                // TODO: Initiate accessToken exchange workflow
-                element("plaid-public-token").innerText = publicToken;
+            onSuccess: async function(publicToken) {
+                element("plaid-public-token").innerText = `Public Token: ${publicToken}`;
+                
+                var rawResponse = await fetch("/api/auth/get-access-token", {
+                    method: "POST",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ publicToken })
+                })
+                
+                var tokenExchangeResponse = await rawResponse.json();
+                var { accessToken, itemId } = tokenExchangeResponse;
+                
+                element("plaid-access-token").innerText = `Access Token: ${accessToken}`;
+                element("plaid-item-id").innerText = `Item Id: ${itemId}`;
             }
         });
     </script>
