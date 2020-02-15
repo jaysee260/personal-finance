@@ -49,6 +49,21 @@ app.post("/api/auth/get-access-token", async function(req, res) {
         res.status(500).json({ error: "An error occurred during the token exchange workflow." });
     }
 });
+
+app.get("/api/accounts/:itemId", function(req, res) {
+    // At this point, we can assume the caller has already generated an accessToken.
+    // So, we can use the itemId to look up the respective accessToken.
+    // If found, we call the Plaid API. Otherwise, we reject the request due to lack of permissions.
+    // Calls to the Plaid API only expect an access token...
+
+    // Or... an alternative is to expect the the access token in a request header, but that would mean
+    // the client would have to store the token on the front end and pass it around... Which I don't feel
+    // strongly about. An access token seems like a sensitive enough piece of information to not want to
+    // leave it floating around on the client side. 
+
+    // Some research is due before deciding on "best" approach.
+})
+
 app.get("/home-exercise", function(req, res) {
     var accounts = [
         {
