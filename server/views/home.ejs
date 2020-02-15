@@ -7,21 +7,39 @@
     <title>Home</title>
 </head>
 <body>
+    <h2>Welcome</h2>
 
-    <h1>Accounts</h1>
+    <button id="link-account-btn">Link an Account</button>
 
-    <ul id="accounts"></ul>
+    <p id="plaid-public-token"></p>
 
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+    <!-- Utility Functions Declaration -->
     <script>
-        var accounts = JSON.parse('<%- JSON.stringify(accounts) %>');
-        var accountsList = document.getElementById("accounts");
-        
-        accounts.forEach(function(account) {
-            var listItem = document.createElement("li");
-            listItem.setAttribute("id", account.id);
-            listItem.setAttribute("class", "account");
-            listItem.innerText = account.name;
-            accountsList.appendChild(listItem);
+        const element = id => document.getElementById(id);
+    </script>
+
+    <!-- Plaid Link Client Initialization -->
+    <script>
+        var plaidLinkClient = Plaid.create({
+            apiVersion: 'v2',
+            clientName: 'Personal Finance - Plaid Link Handler',
+            env: '<%= PLAID_ENV %>',
+            product: '<%= PLAID_PRODUCTS %>'.split(','),
+            key: '<%= PLAID_PUBLIC_KEY %>',
+            countryCodes: '<%= PLAID_COUNTRY_CODES %>'.split(','),
+            onSuccess: function(publicToken) {
+                // TODO: Initiate accessToken exchange workflow
+                element("plaid-public-token").innerText = publicToken;
+            }
+        });
+    </script>
+
+    <!-- Event Handlers Registration -->
+    <script>
+        element("link-account-btn").addEventListener("click", function() {
+            plaidLinkClient.open();
         });
     </script>
 </body>
