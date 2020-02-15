@@ -1,4 +1,5 @@
 var express = require("express");
+var bodyParser = require("body-parser");
 var plaid = require("plaid");
 
 var app = express();
@@ -6,6 +7,8 @@ var PORT = 3000;
 var { plaid:plaidConfig } = require("./config");
 
 app.set("view engine", "ejs");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // TODO: Create Plaid client. We will need it to make API calls to Plaid.
 
