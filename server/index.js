@@ -20,6 +20,11 @@ var plaidClient = new plaid.Client(
     {version: '2019-05-29', clientApp: 'Personal Finance - API'}
 );
 
+// Store these values in memory for now.
+// TODO: Store these in a secure, persistent data store
+var ACCESS_TOKEN = null;
+var ITEM_ID = null;
+
 app.get("/", function(req, res) {
     res.render("home.ejs", {
         PLAID_PUBLIC_KEY: plaidConfig.publicKey,
@@ -41,6 +46,9 @@ app.post("/api/plaid/auth/get-access-token", async function(req, res) {
         let tokenExchangeResponse = await plaidClient.exchangePublicToken(publicToken);
         let { access_token, item_id } = tokenExchangeResponse;
         // TODO: associate accessToken to itemId, and persist to a DB.
+        ACCESS_TOKEN = access_token;
+        ITEM_ID = item_id;
+
         res.status(200).json({
             accessToken: access_token,
             itemId: item_id
@@ -64,6 +72,19 @@ app.get("/api/plaid/accounts", async function(req, res) {
     // leave it floating around on the client side. 
 
     // Some research is due before deciding on "best" approach.
+
+    // TODO: considered a ?filtered=true|false query param
+    try {
+        let getAccountsResponse = await plaidClient.getAccounts(ACCESS_TOKEN);
+        let filteredAccounts = getAccountsResponse
+            .accounts
+            .filter(acct => acct.subtype === "checking" || acct.subtype === "credit card");
+
+        res.status(200).json({ accounts: filteredAccounts, count: filteredAccounts.length });
+    } catch (getAccountsError) {
+        console.log({ getAccountsError });
+        res.status(500).json({ error: `An error occurred while getting accounts for item ${ITEM_ID}` })
+    }
 })
 
 app.get("/home-exercise", function(req, res) {
