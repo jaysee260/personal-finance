@@ -41,7 +41,7 @@
             onSuccess: async function(publicToken) {
                 element("plaid-public-token").innerText = `Public Token: ${publicToken}`;
                 
-                var rawResponse = await fetch("/api/auth/get-access-token", {
+                var rawResponse = await fetch("/api/plaid/auth/get-access-token", {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',

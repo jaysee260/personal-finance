@@ -29,7 +29,8 @@ app.get("/", function(req, res) {
     })
 });
 
-app.post("/api/auth/get-access-token", async function(req, res) {
+// TODO: Settle on a standard envelope for API responses.
+app.post("/api/plaid/auth/get-access-token", async function(req, res) {
     let { publicToken } = req.body;
     
     if (isNullOrEmpty(publicToken)) {
@@ -50,7 +51,8 @@ app.post("/api/auth/get-access-token", async function(req, res) {
     }
 });
 
-app.get("/api/accounts/:itemId", function(req, res) {
+app.get("/api/plaid/accounts", async function(req, res) {
+    // /api/accounts/:itemId ?
     // At this point, we can assume the caller has already generated an accessToken.
     // So, we can use the itemId to look up the respective accessToken.
     // If found, we call the Plaid API. Otherwise, we reject the request due to lack of permissions.
