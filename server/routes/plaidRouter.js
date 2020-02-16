@@ -1,16 +1,7 @@
 var plaidRouter = require("express").Router();
-var plaid = require("plaid");
 
-var { plaid:plaidConfig } = require("../config");
+var plaidClient = require("../utils/plaidClient");
 var { isNullOrEmpty } = require("../utils/stringUtilities");
-
-var plaidClient = new plaid.Client(
-    plaidConfig.clientId,
-    plaidConfig.secret,
-    plaidConfig.publicKey,
-    plaid.environments[plaidConfig.env],
-    {version: '2019-05-29', clientApp: 'Personal Finance - API'}
-);
 
 // Store these values in memory for now.
 // TODO: Store these in a secure, persistent data store
