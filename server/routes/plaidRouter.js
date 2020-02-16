@@ -28,12 +28,54 @@ plaidRouter.post("/auth/get-access-token", async function(req, res) {
             itemId: item_id
         });
     } catch (tokenExchangeError) {
+        // TODO: Improve descriptiveness of client-facing error handling
         console.error({ tokenExchangeError });
         res.status(500).json({ error: "An error occurred during the token exchange workflow." });
     }
 })
 
-plaidRouter.get("/api/plaid/accounts", async function(req, res) {
+plaidRouter.get("/item", async function(req, res) {
+    let getItemResponse;
+
+    try {
+        getItemResponse = await plaidClient.getItem(ACCESS_TOKEN);
+    } catch (getItemError) {
+        console.error({ getItemError });
+        res.status(500).json({ error: "An error occurred while getting Item information." });
+    }
+
+    let getInstitutionResponse;
+    
+    try {
+        let { item } = getItemResponse;
+
+        getInstitutionResponse = await plaidClient.getInstitutionById(item.institution_id);
+        let { institution } = getInstitutionResponse;
+
+        // TODO: Something to consider...
+        // We may not want to expose the itemId to the front end?
+        // Unsure about whether there's a valid reason for why we wouldn't want to.
+        // Something to look into.
+        // If that turns out to be the case, we can associate the item id with the institution id,
+        // and pass back the institution id. And if we, for whatever reason, need the item id, we
+        // could do a lookup by institution id.
+        // Only if needed. If it's safe to pass item id to client, then we're safe.
+        res.status(200).json({
+            item: {
+                id: item.item_id
+            },
+            institution: {
+                id: institution.institution_id,
+                name: institution.name
+            }
+        });
+    } catch (getInstitutionError) {
+        console.error({ getInstitutionError });
+        res.status(500).json({ error: "An error occurred while information for institution <id>." });
+    }
+});
+
+plaidRouter.get("/accounts", async function(req, res) {
     // /api/accounts/:itemId ?
     // At this point, we can assume the caller has already generated an accessToken.
     // So, we can use the itemId to look up the respective accessToken.

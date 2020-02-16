@@ -33,13 +33,13 @@
     Do I want to see a list of the financial institutions I have accounts with, and have to click
     on each one to see the accounts therein, or do I want to see a list of accounts, and have a label
     attached to it with the financial institution it belongs to? -->
-    <button id="link-account-btn">Link an Account</button>
+    <button id="link-account-btn">Link a Financial Institution</button>
 
     <p id="plaid-public-token"></p>
     <p id="plaid-access-token"></p>
     <p id="plaid-item-id"></p>
 
-    <table id="accounts">
+    <!-- <table id="accounts">
         <tr id="table-header">
             <th>Account Name</th>
             <th>Financial Institution</th>
@@ -48,7 +48,8 @@
             <td>Personal Checking</td>
             <td>Bank of America</td>
         </tr>
-    </table>
+    </table> -->
+    <div id="financial-institutions"></div>
 
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 
@@ -91,14 +92,17 @@
                 element("plaid-access-token").innerText = `Access Token: ${accessToken}`;
                 element("plaid-item-id").innerText = `Item Id: ${itemId}`;
 
-                renderAccountsFor(itemId);
+                await renderFinancialInstitution();
             }
         });
     </script>
 
     <script>
-        function renderAccountsFor(itemId) {
-            console.log(itemId);
+        async function renderFinancialInstitution() {
+            var rawResponse = await fetch("/api/plaid/item");
+            var getItemResponse = await rawResponse.json();
+
+            element("financial-institutions").innerText = JSON.stringify(getItemResponse, null, 2);
         }
     </script>
 
