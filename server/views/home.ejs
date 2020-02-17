@@ -22,6 +22,22 @@
     <p id="plaid-access-token"></p>
     <p id="plaid-item-id"></p>
 
+    <ul id="financial-institutions" class="nav nav-tabs">
+        <!-- <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+    </ul>
+
+    <!-- <div id="financial-institutions"></div> -->
 
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 
@@ -74,6 +90,10 @@
             var rawResponse = await fetch("/api/plaid/item");
             var getItemResponse = await rawResponse.json();
 
+            var newTab = Tab(getItemResponse.institution.id, getItemResponse.institution.name);
+            
+            newTab.childNodes[0].classList.add("active");
+            element("financial-institutions").appendChild(newTab);
         }
     </script>
 
@@ -82,6 +102,22 @@
         element("link-account-btn").addEventListener("click", function() {
             plaidLinkClient.open();
         });
+    </script>
+
+    <script>
+        function Tab(id, innerText) {
+            let li = document.createElement("li");
+            li.setAttribute("class", "nav-item");
+
+            let anchor = document.createElement("a");
+            anchor.setAttribute("class", "nav-link");
+            anchor.setAttribute("id", id);
+            anchor.innerText = innerText;
+
+            li.appendChild(anchor);
+
+            return li;
+        }
     </script>
 </body>
 </html>
