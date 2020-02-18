@@ -17,9 +17,11 @@ mongoose.connect(
 );
 
 // Register routes
+var authRouter = require("./routes/authRouter");
 var landingRouter = require("./routes/landingRouter");
 var plaidRouter = require("./routes/plaidRouter");
 
+app.use("/auth", authRouter);
 app.use("/", landingRouter);
 app.use("/api/plaid", plaidRouter);
 
