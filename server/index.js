@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 
-var PORT = 3000;
+var PORT = process.env.PORT || 80;
 var app = express();
 
 app.set("view engine", "ejs");
