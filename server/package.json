@@ -4,8 +4,8 @@
   "description": "A web app for tracking financial activity across multiple accounts.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node -r dotenv/config index.js",
+    "dev": "nodemon -r dotenv/config index.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,10 @@
   "homepage": "https://github.com/jsdev17/personal-finance#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "mongoose": "^5.9.1",
     "nodemon": "^2.0.2",
     "plaid": "^4.6.0"
   }

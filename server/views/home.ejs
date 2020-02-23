@@ -6,49 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
 
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+    >
 </head>
 <body>
     <h2>Welcome</h2>
 
-    <!-- Link a financial institution, and then selectively link accounts,
-    OR jump straight to linking accounts?
-    This is ultimately a matter of user experience...
-    Do I want to see a list of the financial institutions I have accounts with, and have to click
-    on each one to see the accounts therein, or do I want to see a list of accounts, and have a label
-    attached to it with the financial institution it belongs to? -->
-    <button id="link-account-btn">Link an Account</button>
+    <button id="link-account-btn">Link a Financial Institution</button>
 
     <p id="plaid-public-token"></p>
     <p id="plaid-access-token"></p>
     <p id="plaid-item-id"></p>
 
-    <table id="accounts">
-        <tr id="table-header">
-            <th>Account Name</th>
-            <th>Financial Institution</th>
-        </tr>
-        <tr id="table-body">
-            <td>Personal Checking</td>
-            <td>Bank of America</td>
-        </tr>
-    </table>
+    <ul id="financial-institutions" class="nav nav-tabs">
+        <!-- <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+    </ul>
+
+    <!-- <div id="financial-institutions"></div> -->
 
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
 
@@ -91,14 +80,20 @@
                 element("plaid-access-token").innerText = `Access Token: ${accessToken}`;
                 element("plaid-item-id").innerText = `Item Id: ${itemId}`;
 
-                renderAccountsFor(itemId);
+                await renderFinancialInstitution();
             }
         });
     </script>
 
     <script>
-        function renderAccountsFor(itemId) {
-            console.log(itemId);
+        async function renderFinancialInstitution() {
+            var rawResponse = await fetch("/api/plaid/item");
+            var getItemResponse = await rawResponse.json();
+
+            var newTab = Tab(getItemResponse.institution.id, getItemResponse.institution.name);
+            
+            newTab.childNodes[0].classList.add("active");
+            element("financial-institutions").appendChild(newTab);
         }
     </script>
 
@@ -107,6 +102,22 @@
         element("link-account-btn").addEventListener("click", function() {
             plaidLinkClient.open();
         });
+    </script>
+
+    <script>
+        function Tab(id, innerText) {
+            let li = document.createElement("li");
+            li.setAttribute("class", "nav-item");
+
+            let anchor = document.createElement("a");
+            anchor.setAttribute("class", "nav-link");
+            anchor.setAttribute("id", id);
+            anchor.innerText = innerText;
+
+            li.appendChild(anchor);
+
+            return li;
+        }
     </script>
 </body>
 </html>
