@@ -28,7 +28,7 @@ plaidRouter.post("/auth/get-access-token", async function(req, res) {
             itemId: item_id
         });
     } catch (tokenExchangeError) {
-        // TODO: Improve descriptiveness of client-facing error handling
+        // TODO: Improve descriptiveness of client-facing error
         console.error({ tokenExchangeError });
         res.status(500).json({ error: "An error occurred during the token exchange workflow." });
     }

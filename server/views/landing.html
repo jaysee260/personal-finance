@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Expense Tracker</title>
-    <link rel="stylesheet" type="text/css" href='../public/css/landing.css'>
+    <link rel="stylesheet" type="text/css" href="css/landing.css">
 </head>
 <body>
     <header id="main-header">
@@ -40,7 +40,7 @@
     </section>
 
     <aside id="sidebar">
-            <form method="POST" id="register">
+            <form id="register">
                 <br>
                     <div>
                         <label>First Name</label>
@@ -61,9 +61,10 @@
                         <label>Password</label>
                         <input type="password" name="password">
                     </div>
+
+                    <button id="button-submit" type="submit" form="register" value="Submit">Create Account</button>
             </form>
 
-            <button id="button-submit" type="submit" form="register" value="Submit">Create Account</button>
         
             <p id="already-account">Already have an account?</p> 
 
@@ -77,6 +78,23 @@
     <footer id="main-footer">
         <p>Copyright &copy; 2020 Expense Tracker</p>
     </footer>
+
+    <script>
+        document.getElementById("register").addEventListener("submit", registerUser)
+
+        function registerUser(e) {
+            e.preventDefault();
+
+            var inputs = Array.from(e.target.elements).filter(element => element.nodeName === "INPUT");
+            var userInfo = {};
+
+            for (const input of inputs) {
+                userInfo[input.name] = input.value;
+            }
+
+            console.log({ userInfo });
+        }
+    </script>
 
 </body>
 

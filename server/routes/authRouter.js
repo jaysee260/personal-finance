@@ -1,6 +1,6 @@
-var authRouter = require("express").Router();
-// TODO: Use a UserFactory and delegate user creation, password hashing and validation responsibilities to it.
-var User = require("../models/User");
+const authRouter = require("express").Router();
+const UserFactory = require("../utils/userFactory");
+const AuthUtilities = require("../utils/authUtilities");
 
 authRouter.post("/register", async function(req, res) {
     let { userInfo } = req.body;
@@ -9,19 +9,50 @@ authRouter.post("/register", async function(req, res) {
         return res.status(400).json({ error: "Please provide user info." });
     }
 
-    let user = new User(userInfo);
-
     try {
+        let userValidationError = AuthUtilities.validateUser(userInfo);
+        if (userValidationError) {
+            return res.status(400).json({ error: userValidationError.details[0].message });
+        }
+        
+        // Check if email already exists in DB
+        let userExists = await AuthUtilities.checkIfUserExists(userInfo.email);
+        if (userExists) {
+            return res.status(400).json({ error: "Email already in use." });
+        }
+
+        let user = await UserFactory.createUser(userInfo);
         let newUser = await user.save();
-        res.status(200).json(newUser);
+
+        res.status(200).json({ userId: newUser._id });
     } catch (newUserCreationError) {
         console.log({ newUserCreationError });
         res.status(500).json({ error: "An error occurred while creating new user." });
     }
 });
 
-authRouter.post("/login", function(req, res) {
-    res.send("login");
+authRouter.post("/login", async function(req, res) {
+    let { login } = req.body;
+
+    // Check if user exists
+    let user = await AuthUtilities.checkIfUserExists(login.email);
+    if (!user) {
+        return res.status(400).json({ error: "A user with that email does not exist." });
+    }
+
+    // Check if password is correct
+    let passwordIsCorrect = await AuthUtilities.validatePassword(login.password, user.password);
+    if (!passwordIsCorrect) {
+        return res.status(400).json({ error: "Password is incorrect." });
+        // TODO: Implement some sort of lockout mechanism after X failed attempts
+    }
+    
+    // Create and assign the user a token
+    let jwtClaims = { userId: user._id };
+    const token = AuthUtilities.generateJwt(jwtClaims);
+    res.status(200)
+        .header("Authentication", `Bearer ${token}`)
+        .json({ token });
 });
 
 module.exports = authRouter;
