@@ -1,5 +1,5 @@
 var plaid = require("plaid");
-var { plaid:plaidConfig } = require("../config");
+var { plaid : plaidConfig } = require("../config");
 
 var plaidClient = new plaid.Client(
     plaidConfig.clientId,
