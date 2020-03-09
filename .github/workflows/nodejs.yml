@@ -19,8 +19,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - run: npm ci
-    - run: npm ci
-    - run: npm test
+    - run: npm --prefix ./server/src ci
+    - run: npm --prefix ./server/tests ci
+    - run: npm --prefix ./server/tests test
       env:
         CI: true
