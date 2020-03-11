@@ -4,8 +4,10 @@
   "description": "A web app for tracking financial activity across multiple accounts.",
   "main": "index.js",
   "scripts": {
-    "start": "node -r dotenv/config index.js",
-    "dev": "nodemon -r dotenv/config index.js"
+    "start": "node -r dotenv/config src/index.js",
+    "dev": "nodemon -r dotenv/config src/index.js",
+    "test": "jest",
+    "test-dev": "jest --watch" 
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,8 @@
     "mongoose": "^5.9.1",
     "nodemon": "^2.0.2",
     "plaid": "^4.6.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }
