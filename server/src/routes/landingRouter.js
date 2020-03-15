@@ -7,7 +7,7 @@ landingRouter.get("/", function(req, res) {
     res.sendFile(path.resolve("./views/landing.html"));
 });
 
-landingRouter.get("/home", verifyJwt, function(req, res) {
+landingRouter.get("/home", /* verifyJwt,*/ function(req, res) {
     res.render("home.ejs", {
         PLAID_PUBLIC_KEY: plaidConfig.publicKey,
         PLAID_ENV: plaidConfig.env,

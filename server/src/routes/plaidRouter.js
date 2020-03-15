@@ -1,4 +1,5 @@
 var plaidRouter = require("express").Router();
+var moment = require("moment");
 
 var plaidClient = require("../utils/plaidClient");
 var { isNullOrEmpty } = require("../utils/stringUtilities");
@@ -102,5 +103,30 @@ plaidRouter.get("/accounts", async function(req, res) {
         res.status(500).json({ error: `An error occurred while getting accounts for item ${ITEM_ID}` })
     }
 })
+
+plaidRouter.get("/transactions/:accountId", async function(req, res) {
+    const { accountId } = req.params;
+
+    if (isNullOrEmpty(accountId)) {
+        res.status(400).json({ error: "An account id must be provided to retrieve transactions." });
+    }
+
+    // Pull transactions from last 7 days
+    // TODO: Programmatically pull transactions from today (whatever the day is), until beginning of week
+    try {
+        let startDate = moment().subtract(7, 'days').format('YYYY-MM-DD');
+        let endDate = moment().format('YYYY-MM-DD');
+        
+        let getTransactionsResponse = await plaidClient.getTransactions(ACCESS_TOKEN, startDate, endDate, { account_ids: [accountId] })
+    
+        let { transactions } = getTransactionsResponse;
+        // TODO: Consider using data property in successful response envelope
+        res.status(200).json({ transactions });
+    } catch (getTransactionsError) {
+        console.error({ getTransactionsError });
+        res.status(500).json({ error: `Something went wrong while trying to retrieve transactions for account ${accountId}` });
+    }
+
+});
 
 module.exports = plaidRouter;
