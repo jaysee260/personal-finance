@@ -13,7 +13,6 @@ jobs:
   api_tests:
     name: "Run API Tests"
     runs-on: ubuntu-latest
-  
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -21,5 +20,3 @@ jobs:
         node-version: '10.x'
     - run: npm --prefix ./server ci
     - run: npm --prefix ./server test
-      env:
-        CI: true
