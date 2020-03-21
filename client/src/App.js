@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PlaidLink from "react-plaid-link";
-import { plaid } from "./config"
 import AccountsList from './components/AccountsList';
 import Account from './components/Account';
 import Navbar from './components/Navbar';
 import FluidContainer from './components/common/FluidContainer';
 import Container from './components/common/Container';
+import appConfig from "./config";
+const { plaid } = appConfig[process.env.NODE_ENV];
 
 function App() {
   let publicToken = null;
@@ -24,6 +25,10 @@ function App() {
 
   function handleOnExit() {
     console.log("something went wrong");
+  }
+
+  function initiateAccessTokenExchange() {
+
   }
 
   return (
