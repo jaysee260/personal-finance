@@ -16,3 +16,6 @@ jobs:
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build core-api
       run: docker build ./server -t 6containers/personal-finance:core-api-1.0.0
+    - name: docker push
+      run: |
+        docker push 6containers/personal-finance:core-api-1.0.0
