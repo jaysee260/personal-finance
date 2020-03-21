@@ -1,0 +1,20 @@
+{
+    "jwt": {
+        "secret": ""
+    },
+    "database": {
+        "mongo": {
+            "connectionString": ""
+        }
+    },
+    "plaid": {
+        "production": {
+            "clientId": "",
+            "secret": "",
+            "publicKey": "",
+            "env": "production",
+            "products": "transactions",
+            "countryCodes": "US,CA,GB,FR,ES"
+        }
+    }
+}

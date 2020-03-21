@@ -1,0 +1,28 @@
+{
+    "jwt": {
+        "secret": ""
+    },
+    "database": {
+        "mongo": {
+            "connectionString": ""
+        }
+    },
+    "plaid": {
+        "sandbox": {
+            "clientId": "",
+            "secret": "",
+            "publicKey": "",
+            "env": "sandbox",
+            "products": "transactions",
+            "countryCodes": "US,CA,GB,FR,ES"
+        },
+        "development": {
+            "clientId": "",
+            "secret": "",
+            "publicKey": "",
+            "env": "development",
+            "products": "transactions",
+            "countryCodes": "US,CA,GB,FR,ES"
+        }
+    }
+}

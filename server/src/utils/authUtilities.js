@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { registrationSchema } = require("../models/User/validation");
-const { jwt : jwtConfig } = require("../config");
+const { jwt : jwtConfig } = require("../../config")[process.env.NODE_ENV];
 const User = require("../models/User");
 
 const authUtilities = {};

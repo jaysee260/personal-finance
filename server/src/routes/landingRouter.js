@@ -1,6 +1,6 @@
 var landingRouter = require("express").Router();
 var path = require("path");
-var { plaid : plaidConfig } = require("../config");
+var plaidConfig = require("../../config")[process.env.NODE_ENV].plaid[process.env.PLAID_ENV];
 var verifyJwt = require("../utils/middleware/verifyJwt");
 
 landingRouter.get("/", function(req, res) {
