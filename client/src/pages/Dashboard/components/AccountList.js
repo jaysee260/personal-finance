@@ -1,9 +1,9 @@
 import React from "react";
 
-const AccountsList = ({ children }) => (
+const AccountList = ({ children }) => (
     <ul className="list-group">
         {children}
     </ul>
 )
 
-export default AccountsList
+export default AccountList
