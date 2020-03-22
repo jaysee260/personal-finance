@@ -9,13 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
     - name: docker build core-api
       run: docker build ./server -t 6containers/personal-finance:core-api-1.0.0
+
+    - name: docker build react-client
+      run: docker build ./client -t 6containers/personal-finance:react-client-1.0.0
+
     - name: docker push
       run: |
         docker push 6containers/personal-finance:core-api-1.0.0
+        docker push 6containers/personal-finance:react-client-1.0.0
