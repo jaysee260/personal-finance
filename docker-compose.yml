@@ -6,12 +6,22 @@ services:
     core-api:
         image: 6containers/personal-finance:core-api-1.0.0
         container_name: core-api
+        # we currently don't have plaid production keys so run in dev envrionment for now.
+        environment:
+            PORT: 5000
+            NODE_ENV: development
+            PLAID_ENV: sandbox
         ports:
             - 5050:5000
 
     react-client:
         image: 6containers/personal-finance:react-client-1.0.0
         container_name: react-client
+        # once we're production ready we will update these values for a production environment.
+        environment:
+            PORT: 3000
+            NODE_ENV: development
+            BROWSER: none # prevents browser launch attempt inside container
         ports:
             - 3030:3000
         depends_on:
