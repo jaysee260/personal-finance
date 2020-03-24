@@ -1,0 +1,18 @@
+version: "3"
+
+# service images are built and pushed to docker hub from CI/CD pipeline
+
+services:
+    core-api:
+        image: 6containers/personal-finance:core-api-1.0.0
+        container_name: core-api
+        ports:
+            - 5050:5000
+
+    react-client:
+        image: 6containers/personal-finance:react-client-1.0.0
+        container_name: react-client
+        ports:
+            - 3030:3000
+        depends_on:
+            - core-api

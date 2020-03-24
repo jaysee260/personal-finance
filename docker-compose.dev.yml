@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+    core-api:
+        build: ./server
+        command: bash -c "npm i -g nodemon && npm run dev"
+        image: 6containers/personal-finance:core-api-dev
+        container_name: core-api
+        volumes:
+            - "./server/:/usr/app"
+        environment:
+            PORT: 5000
+            NODE_ENV: development
+            PLAID_ENV: sandbox
+        ports:
+            - 5050:5000
+
+    react-client:
+        build: ./client
+        image: 6containers/personal-finance:react-client-dev
+        container_name: react-client
+        volumes:
+            - "./client/:/usr/app"
+        environment:
+            PORT: 3000
+            NODE_ENV: development
+            BROWSER: none # prevents browser launch attempt inside container
+        ports:
+            - 3030:3000
+        depends_on:
+            - core-api
