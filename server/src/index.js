@@ -24,5 +24,5 @@ app.use("/", landingRouter);
 app.use("/api/plaid", plaidRouter);
 
 app.listen(PORT, function() {
-    console.log("Server running on port %s", PORT);
+    console.log("Server running on http://localhost:%s", PORT);
 });
