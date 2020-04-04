@@ -10,13 +10,9 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Connect to Mongo DB
-const mongoConnectionString = process.env.MONGO_DB_CONNECTION_STRING || require("./config")[process.env.NODE_ENV].database.mongo.connectionString
-mongoose.connect(
-    mongoConnectionString,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    () => console.log("Connected to Mongo DB.")
-);
+// Initialize database
+const { initializeDb } = require("./db")
+initializeDb();
 
 // Register routes
 var authRouter = require("./routes/authRouter");
