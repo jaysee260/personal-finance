@@ -1,100 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Expense Tracker</title>
     <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <title>Expense Tracker</title>
 </head>
+
 <body>
+    <!--Header-->
     <header id="main-header">
         <div class="container-title">
             <h1>Expense Tracker</h1>
-         </div>
+        </div>
     </header>
 
+    <!--NavBar-->
     <nav id="navbar">
-            <div class="container-navbar">
-                <ul>
-                     <li><a href="#">Home</a></li>
-                     <li><a href="#">About</a></li>
-                     <li><a href="#">Services</a></li>
-                     <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-    </nav>   
-        
-    <!--<section id="showcase">
-        <div class="container">
-        <h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            Et totam dicta quibusdam!
-        </h1>
+        <div class="container-navbar">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
         </div>
-    </section>-->
+    </nav>
 
-    <div class="container">
-    <section id="main">
-        <h1>Welcome</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-             Natus necessitatibus iusto, officiis ipsa perferendis tempora ad ducimus cumque vel 
-             voluptas blanditiis magnam excepturi recusandae dolorum aliquid 
-             commodi dignissimos, ipsam consequuntur.</p>
-    </section>
+    <!--Login Form-->
+    <div class="wrap">
 
-    <aside id="sidebar">
-            <form id="register">
-                <br>
-                    <div>
-                        <label>First Name</label>
-                        <input type="text" name="firstName">
-                    </div>
-                    <br>
-                    <div>
-                        <label>Last Name</label>
-                        <input type="text" name="lastName">
-                    </div>
-                    <br>
-                    <div>
-                        <label>Email</label>
-                        <input type="email" name="email">
-                    </div>
-                    <br>
-                    <div>
-                        <label>Password</label>
-                        <input type="password" name="password">
-                    </div>
+        <p class="welcome">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat consequatur, delectus ipsam repellendus laudantium iste numquam, quis blanditiis eum voluptatibus nam nisi iusto natus minus corrupti. Deserunt quas tempore ullam quibusdam eos
+            ipsum error consectetur, quis fugiat unde eaque minus quasi odit corporis aliquid reprehenderit illo voluptatibus perferendis neque molestias?
+            <br><br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat consequatur, delectus ipsam repellendus laudantium iste numquam, quis blanditiis eum voluptatibus nam nisi iusto natus minus corrupti. Deserunt quas tempore ullam quibusdam
+            eos ipsum error consectetur, quis fugiat unde eaque minus quasi odit corporis aliquid reprehenderit illo voluptatibus perferendis neque molestias?
+        </p>
 
-                    <button id="button-submit" type="submit" form="register" value="Submit">Create Account</button>
-            </form>
 
-        
-            <p id="already-account">Already have an account?</p> 
 
-            <br><br><br><br>
+        <form class="login-form" action="">
+            <div class="form-header">
+                <h3>Expense Tracker</h3>
+                <p>Login</p>
+            </div>
+            <!--Email Input-->
+            <div class="form-group">
+                <input type="text" class="form-input" placeholder="email@example.com">
+            </div>
+            <!--Password Input-->
+            <div class="form-group">
+                <input type="password" class="form-input" placeholder="password">
+            </div>
+            <!--Login Button-->
+            <div class="form-group">
+                <button class="form-button" type="submit">Login</button>
+            </div>
+            <br>
+            <div class="form-footer">
+                Don't have an account? <a href="#">Sign Up</a>
+            </div>
+        </form>
 
-            <button id="button-sign-in">Sign In</button>
-
-    </aside>
     </div>
+    <!--/.wrap-->
 
+    <!--Footer-->
     <footer id="main-footer">
         <p>Copyright &copy; 2020 Expense Tracker</p>
     </footer>
-
-    <script>
-        document.getElementById("register").addEventListener("submit", registerUser)
-
-        function registerUser(e) {
-            e.preventDefault();
-
-            var inputs = Array.from(e.target.elements).filter(element => element.nodeName === "INPUT");
-            var userInfo = {};
-
-            for (const input of inputs) {
-                userInfo[input.name] = input.value;
-            }
-
-            console.log({ userInfo });
-        }
-    </script>
 
 </body>
 
