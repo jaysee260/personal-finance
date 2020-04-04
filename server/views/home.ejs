@@ -65,7 +65,7 @@
             onSuccess: async function(publicToken) {
                 element("plaid-public-token").innerText = `Public Token: ${publicToken}`;
                 
-                var rawResponse = await fetch("/api/plaid/auth/get-access-token", {
+                var rawResponse = await fetch("/api/get-access-token", {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',
@@ -87,7 +87,7 @@
 
     <script>
         async function renderFinancialInstitution() {
-            var rawResponse = await fetch("/api/plaid/item");
+            var rawResponse = await fetch("/api/item");
             var getItemResponse = await rawResponse.json();
 
             var newTab = Tab(getItemResponse.institution.id, getItemResponse.institution.name);

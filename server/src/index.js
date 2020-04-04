@@ -14,13 +14,8 @@ const { initializeDb } = require("./db")
 initializeDb();
 
 // Register routes
-var authRouter = require("./routes/authRouter");
-var landingRouter = require("./routes/landingRouter");
-var plaidRouter = require("./routes/plaidRouter");
-
-app.use("/auth", authRouter);
-app.use("/", landingRouter);
-app.use("/api/plaid", plaidRouter);
+const { router } = require("./routes");
+app.use(router);
 
 app.listen(PORT, function() {
     console.log("Server running on http://localhost:%s", PORT);

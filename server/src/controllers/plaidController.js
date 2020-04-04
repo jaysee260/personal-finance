@@ -1,4 +1,4 @@
-var plaidRouter = require("express").Router();
+var plaidController = require("express").Router();
 var moment = require("moment");
 
 var plaidClient = require("../utils/plaidClient");
@@ -10,7 +10,7 @@ var ACCESS_TOKEN = null;
 var ITEM_ID = null;
 
 // TODO: Settle on a standard envelope for API responses.
-plaidRouter.post("/auth/get-access-token", async function(req, res) {
+plaidController.post("/get-access-token", async function(req, res) {
     let { publicToken } = req.body;
     
     if (isNullOrEmpty(publicToken)) {
@@ -35,7 +35,7 @@ plaidRouter.post("/auth/get-access-token", async function(req, res) {
     }
 })
 
-plaidRouter.get("/item", async function(req, res) {
+plaidController.get("/item", async function(req, res) {
     let getItemResponse;
 
     try {
@@ -76,7 +76,7 @@ plaidRouter.get("/item", async function(req, res) {
     }
 });
 
-plaidRouter.get("/accounts", async function(req, res) {
+plaidController.get("/accounts", async function(req, res) {
     // /api/accounts/:itemId ?
     // At this point, we can assume the caller has already generated an accessToken.
     // So, we can use the itemId to look up the respective accessToken.
@@ -104,7 +104,7 @@ plaidRouter.get("/accounts", async function(req, res) {
     }
 })
 
-plaidRouter.get("/transactions/:accountId", async function(req, res) {
+plaidController.get("/transactions/:accountId", async function(req, res) {
     const { accountId } = req.params;
 
     if (isNullOrEmpty(accountId)) {
@@ -129,4 +129,4 @@ plaidRouter.get("/transactions/:accountId", async function(req, res) {
 
 });
 
-module.exports = plaidRouter;
+module.exports = plaidController;

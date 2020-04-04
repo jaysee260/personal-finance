@@ -1,8 +1,9 @@
-const authRouter = require("express").Router();
+const authController = require("express").Router();
 const UserFactory = require("../utils/userFactory");
 const AuthUtilities = require("../utils/authUtilities");
 
-authRouter.post("/register", async function(req, res) {
+// TODO: Consider automatically logging user in after account creation
+authController.post("/register", async function(req, res) {
     let { userInfo } = req.body;
 
     if (!userInfo) {
@@ -31,7 +32,7 @@ authRouter.post("/register", async function(req, res) {
     }
 });
 
-authRouter.post("/login", async function(req, res) {
+authController.post("/login", async function(req, res) {
     let { login } = req.body;
 
     // Check if user exists
@@ -55,4 +56,4 @@ authRouter.post("/login", async function(req, res) {
         .json({ token });
 });
 
-module.exports = authRouter;
+module.exports = authController;
