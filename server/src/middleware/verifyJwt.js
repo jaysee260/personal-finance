@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { jwt : jwtConfig } = require("../../config");
+const jwtSecret = process.env.JWT_SECRET || require("../../config")[process.env.NODE_ENV].jwt.secret
+
 
 function verifyJwt(req, res, next) {
     let authHeader = req.header("Authentication");
@@ -13,8 +14,7 @@ function verifyJwt(req, res, next) {
     }
 
     try {
-        // TODO: Consider moving all config values to a .env file
-        let decodedToken = jwt.verify(token, jwtConfig.secret);
+        let decodedToken = jwt.verify(token, jwtSecret);
         req.currentUser = decodedToken;
         next();
     } catch (tokenVerificationError) {
