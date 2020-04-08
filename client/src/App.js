@@ -8,10 +8,10 @@ function App() {
   return (
     <div id="root" className="App">
 
-      <nav>
+      {/* <nav>
         <Link to="/">Landing</Link> |{" "}
         <Link to="dashboard">Dashboard</Link>
-      </nav>
+      </nav> */}
       
       <Router>
         <Landing path="/" />
